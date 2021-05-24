@@ -14,39 +14,6 @@ clients = []  # Threads
 aliases = []  # User/Client Names
 
 
-# # Listening port
-# BROADCAST_PORT = 5972
-# # Local host information
-# MY_HOST = socket.gethostname()
-# MY_IP = socket.gethostbyname(MY_HOST)
-# # Create a UDP socket
-# listen_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-# # Set the socket to broadcast and enable reusing addresses
-# listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-# listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-# # Bind socket to address and port
-# listen_socket.bind((MY_IP, BROADCAST_PORT))
-# print("Listening to broadcast messages")
-#
-# while True:
-#     data, addr = listen_socket.recvfrom(1024)
-#     if data:
-#         print("Received broadcast message:", data.decode())
-#         break
-#
-# UDP_IP = "127.0.0.1"
-# UDP_PORT = 5005
-#
-# sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-# sock.bind((UDP_IP, UDP_PORT))
-#
-# while True:
-#     data, addr = sock.recvfrom(1024)
-#     print("received message:", data)
-#     break
-#
-#
-
 def broadcast(message):
     for client in clients:
         client.send(message)
