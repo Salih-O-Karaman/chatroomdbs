@@ -1,38 +1,27 @@
-import time, socket, sys
+from thread.broadcast_sender import *
+from thread.write import *
+from thread.receive import *
+from properties import *
 import threading
 
-import DDOH
-
-serverIP = input('IP address of the server >>> ')
-alias = input('Choose an alias >>> ')
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = socket.gethostbyname(socket.gethostname())
-port = 8080
-client.connect((serverIP, port))
+nickname = input("STATUS\nChoose a nickname: ")
 
 
-def client_receive():
-    while True:
-        try:
-            message = client.recv(1024).decode('utf-8')
-            if message == 'alias?':
-                client.send(alias.encode('utf-8'))
-            else:
-                print(message)
-        except:
-            print('Error!')
-            client.close()
-            break
+def main():
+    tcp_socket.connect((ip, TCP_PORT))
 
 
-def client_send():
-    while True:
-        message = f'{alias}: {input("")}'
-        client.send(message.encode('utf-8'))
+    # threads
+    # broadcast_sender_thread = threading.Thread(target=broadcast_sender, args=(nickname,))
+    # broadcast_sender_thread.start()
+
+    receive_thread = threading.Thread(target=receive, args=(nickname,))
+    receive_thread.start()
+
+    write_thread = threading.Thread(target=write, args=(nickname, tcp_socket))
+    write_thread.start()
 
 
-receive_thread = threading.Thread(target=client_receive)
-receive_thread.start()
-send_thread = threading.Thread(target=client_send)
-send_thread.start()
-DDOH.sender_broadcast()
+# running client
+broadcast_sender(nickname)
+main()
